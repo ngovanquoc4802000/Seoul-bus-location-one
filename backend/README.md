@@ -27,3 +27,5 @@ object car :
 
 router : 
  - update status start (vị trí xe bắt đầu)
+ - update status stop(vị trí xe dừng : dừng vào thời điểm nào + dừng trong bao lâu)
+ - update status đích đến 
