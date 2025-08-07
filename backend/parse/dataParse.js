@@ -31,6 +31,23 @@ const convertHexToDate = (hexValue) => {
 };
 
 const parseMQTTMessage = (topic, message) => {
+    try {
+        const jsonData = JSON.parse(message.toString());
+        console.log("Parsing data as JSON...");
+        return {
+            rkey: "rkey",
+            carId: "01222580211",
+             carName: "K3 195호4070",
+            latitude: jsonData.lat / 1000000,
+            longitude: jsonData.lon / 1000000,
+            speed: jsonData.speed,
+            senddt: moment().unix(), // Lấy Unix timestamp hiện tại
+        };
+    } catch (e) {
+        // Nếu không phải JSON, tiếp tục với logic cũ
+        console.log("Data is not JSON, falling back to original parsing logic...");
+    }
+
     const topicParts = topic.split("/");
     if (topicParts[1] === "") {
         return null;

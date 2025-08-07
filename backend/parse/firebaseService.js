@@ -1,15 +1,29 @@
-// chứa các hàm để tương tác với Firebase.
+// backend/parse/firebaseService.js
 
 import { firebaseStoreDB } from '../firebaseAdmin.js'; 
 
+const carCollection = firebaseStoreDB.collection('car-pos'); 
 
-const saveCarData = async (carData) => {
+export const saveCarData = async (carData) => {
     try {
-        const carRef = firebaseStoreDB.collection('car-pos').doc(carData.carId);
+        const carRef = carCollection.doc(carData.carId);
         await carRef.set(carData, { merge: true });
-        console.log(`Car data for ${carData.carId} saved successfully.`);
+        console.log(`Dữ liệu của xe ${carData.carId} đã được lưu thành công.`);
     } catch (error) {
-        console.error("Error saving car data:", error);
+        console.error("Lỗi khi lưu dữ liệu xe:", error);
     }
-}
-export { saveCarData };
+};
+
+export const getCarStatus = async (carId) => {
+    try {
+        const doc = await carCollection.doc(carId).get();
+        if (doc.exists) {
+            return doc.data(); 
+        } else {
+            return null; 
+        }
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu xe:", error);
+        return null;
+    }
+};
