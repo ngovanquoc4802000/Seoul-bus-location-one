@@ -15,10 +15,8 @@ naverApiKey : "" (string)
 senddt : August 5, 2025 at 12:00:00 AM UTC+7 (timestamp)
 */
 
-//File này chứa logic để lấy dữ liệu trạng thái và gửi về cho người dùng.
 import { getCarStatus } from "../parse/firebaseService.js";
 import moment from "moment";
-// get id car
 const getCarStatusId = async (req, res) => {
   try {
     const { carId } = req.params;
@@ -41,7 +39,6 @@ const getCarStatusId = async (req, res) => {
   }
 };
 
-// get all car status
 const getAllCarStatus = async (req, res) => {
   try {
     const carIds = Object.keys(getCarStatus);

@@ -41,10 +41,9 @@ const parseMQTTMessage = (topic, message) => {
             latitude: jsonData.lat / 1000000,
             longitude: jsonData.lon / 1000000,
             speed: jsonData.speed,
-            senddt: moment().unix(), // Lấy Unix timestamp hiện tại
+            senddt: moment().unix(), 
         };
     } catch (e) {
-        // Nếu không phải JSON, tiếp tục với logic cũ
         console.log("Data is not JSON, falling back to original parsing logic...");
     }
 
