@@ -1,14 +1,20 @@
-export interface BusStatus {
-  carId: string;
-  carIdName: string;
-  stopDuration: null | number;
-  lastLocation: LastLocation;
-  lastSpeed: number;
-   isMoving?: boolean; 
-  updatedAt?: string;
-}
+import type { DocumentData } from 'firebase/firestore';
 
-export interface LastLocation {
+export interface BusStatus extends DocumentData {
+  carId: string;
+  carName: string;
+  defaultLat?: number;
+  defaultLon?: number;
+  destination: Destination;
+  expiredt?: string;
+  isMoving: boolean;
+  latitude: number; 
+  longitude: number;
+  rkey?: string;
+  senddt?: number;
+  speed: number;
+}
+export interface Destination {
   latitude: number;
   longitude: number;
 }

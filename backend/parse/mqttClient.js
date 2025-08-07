@@ -13,6 +13,7 @@ const connectAndListen = () => {
 
     client.on("connect", () => {
         console.log("MQTT client connected");
+       
         client.subscribe("/138-81-54417/#");
     });
 

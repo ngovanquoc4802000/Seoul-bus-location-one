@@ -23,31 +23,18 @@ const getCarStatusId = async (req, res) => {
   try {
     const { carId } = req.params;
 
-    const status = await getCarStatus(carId);
+    const data = await getCarStatus(carId);
 
-    if (!status) {
+    if (!data) {
       return res.status(404).json({ message: "Car not found" });
     }
 
     let stopDuration = null;
-    if (!status.isMoving && status.stopStartTime) {
-      stopDuration = moment().diff(status.stopStartTime, "minutes");
+    if (!data.isMoving && data.stopStartTime) {
+      stopDuration = moment().diff(data.stopStartTime, "minutes");
     }
 
-    const responseData = {
-      carId: status.carId,
-      carIdName: status.carName,
-      isMoving: status.isMoving,
-      stopDuration: stopDuration,
-      lastLocation: {
-        latitude: status.latitude,
-        longitude: status.longitude,
-      },
-      lastSpeed: status.speed,
-      updatedAt: new Date().toISOString(), // 👈 thêm dòng này
-    };
-
-    return res.status(200).json(responseData);
+    return res.status(200).json({ ...data, stopDuration });
   } catch (error) {
     console.error("Error getting car status:", error);
     return res.status(500).json({ message: "Internal Server Error" });
