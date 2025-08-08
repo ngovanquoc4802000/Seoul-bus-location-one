@@ -34,14 +34,23 @@ const parseMQTTMessage = (topic, message) => {
     try {
         const jsonData = JSON.parse(message.toString());
         console.log("Parsing data as JSON...");
+       
+        const rkey = "rkey";
+        const carId = "01222580211";
+        const carName = "K3 195호4070";
+        const latitude = jsonData.lat / 1000000;
+        const longitude = jsonData.lon / 1000000;
+        const speed = jsonData.speed || 0;
+        const senddt = moment().unix();
+        
         return {
-            rkey: "rkey",
-            carId: "01222580211",
-             carName: "K3 195호4070",
-            latitude: jsonData.lat / 1000000,
-            longitude: jsonData.lon / 1000000,
-            speed: jsonData.speed,
-            senddt: moment().unix(), 
+            rkey: rkey,
+            carId: carId,
+            carName: carName,
+            latitude: latitude,
+            longitude: longitude,
+            speed: speed,
+            senddt: senddt,
         };
     } catch (e) {
         console.log("Data is not JSON, falling back to original parsing logic...");
