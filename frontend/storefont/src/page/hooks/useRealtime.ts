@@ -14,6 +14,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const useRealtimeBusData = (carId: string) => {
+  
   const [data, setData] = useState<BusStatus | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -35,13 +36,13 @@ const useRealtimeBusData = (carId: string) => {
           setIsLoading(false);
           console.log("Realtime bus data:", fetchedData);
         } else {
-          console.log("Không có dữ liệu cho xe này!");
+          console.log("No data for this vehicle!");
           setData(null);
           setIsLoading(false);
         }
       },
       (err) => {
-        console.error("Lỗi khi lắng nghe dữ liệu:", err);
+        console.error("Error while listening to data:", err);
         setError(err);
         setIsLoading(false);
       }

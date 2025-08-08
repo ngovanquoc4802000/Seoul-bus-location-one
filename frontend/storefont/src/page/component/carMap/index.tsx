@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "leaflet/dist/leaflet.css";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import MapUpdater from "./update";
@@ -78,24 +78,24 @@ const CarMap = ({ carId }: CarMapProps) => {
     const timeDiff = (currentTime - updatedAtTime) / 1000;
 
     if (timeDiff > 10) {
-      setStatusText("Không hoạt động");
+      setStatusText("Inactive");
     } else if (data.isMoving || Number(data.lastSpeed) > 0) {
-      setStatusText("Đang di chuyển");
+      setStatusText("Moving");
     } else if (data.stopDuration !== null && Number(data.stopDuration) >= 30) {
-      setStatusText("Đã kết thúc hoạt động");
+      setStatusText("Stopped");
     } else {
-      setStatusText("Đã dừng");
+      setStatusText("Stopped");
     }
   }, [data, currentTime]);
 
   if (isLoading) {
-    return <div className="text-center p-4">Đang tải dữ liệu xe...</div>;
+    return <div className="text-center p-4">Loading vehicle data...</div>;
   }
 
   if (!data || error) {
     return (
       <div className="text-center p-4 text-red-500">
-        Không có dữ liệu cho xe này hoặc đã xảy ra lỗi.
+        There is no data for this vehicle or an error has occurred.
       </div>
     );
   }
@@ -137,7 +137,7 @@ const CarMap = ({ carId }: CarMapProps) => {
         <Marker position={destinationPosition} icon={destinationIcon}>
           <Popup>
             <div>
-              <h2 className="font-bold">Điểm đến</h2>
+              <h2 className="font-bold">destination</h2>
               <p>
                 {destinationPosition[0].toFixed(6)},{" "}
                 {destinationPosition[1].toFixed(6)}
